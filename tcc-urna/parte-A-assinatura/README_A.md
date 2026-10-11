@@ -1,6 +1,6 @@
 # Parte A — Demonstração de assinatura digital
 
-**Responsável:** (escrever o nome da Pessoa A)
+**Responsável:** (Agatha)
 **Branch do Git:** `parte-a`
 
 > Regra de ouro: **só edite arquivos desta pasta.**
