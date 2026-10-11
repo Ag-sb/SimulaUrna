@@ -1,0 +1,4 @@
+SOFTWARE_URNA_FICTICIO v1.0
+// Este arquivo representa o "programa da urna" (simulação didática)
+contabiliza_voto();
+registra_boletim();

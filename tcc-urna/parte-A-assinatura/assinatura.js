@@ -2,7 +2,7 @@
  * assinatura.js — Assinatura digital para o simulador de urna (ECDSA P-256 + SHA-256)
  * Usa a Web Crypto API do navegador (nada para instalar).
  *
- * Funções (todas async), conforme o contrato com a Parte B:
+ * Funções (todas async), conforme o acordo com a Parte B:
  *   gerarChaves()                                   -> { chavePublica, chavePrivada }
  *   assinar(texto, chavePrivada)                    -> assinatura em base64 (string)
  *   verificar(texto, assinaturaBase64, chavePublica)-> true ou false
