@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Simulador Didático de Urna (NÃO é a urna real)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
@@ -13,41 +16,57 @@
 
 <div class="grid">
   <!-- URNA -->
-  <div class="card">
+  <section class="card">
     <h2>1. Urna (votação)</h2>
-    <label>Seção: <select id="secao"></select></label>
-    <div class="tela" id="tela">Digite o número do candidato</div>
-    <input id="numero" maxlength="2" placeholder="Nº (2 dígitos)" size="12">
-    <div>
-      <button class="branco" onclick="votar('BRANCO')">BRANCO</button>
-      <button class="corr" onclick="corrige()">CORRIGE</button>
-      <button class="conf" onclick="confirma()">CONFIRMA</button>
+    <label class="secao-sel">Seção <select id="secao"></select></label>
+
+    <div class="urna-corpo">
+      <div class="bisel"><div class="tela" id="tela" aria-live="polite"></div></div>
+      <div class="teclado">
+        <button class="tecla" onclick="tecla('1')">1</button>
+        <button class="tecla" onclick="tecla('2')">2</button>
+        <button class="tecla" onclick="tecla('3')">3</button>
+        <button class="tecla" onclick="tecla('4')">4</button>
+        <button class="tecla" onclick="tecla('5')">5</button>
+        <button class="tecla" onclick="tecla('6')">6</button>
+        <button class="tecla" onclick="tecla('7')">7</button>
+        <button class="tecla" onclick="tecla('8')">8</button>
+        <button class="tecla" onclick="tecla('9')">9</button>
+        <button class="tecla zero" onclick="tecla('0')">0</button>
+      </div>
+      <div class="acoes">
+        <button class="btn-branco" onclick="brancoTecla()">BRANCO</button>
+        <button class="btn-corrige" onclick="corrige()">CORRIGE</button>
+        <button class="btn-confirma" onclick="confirma()">CONFIRMA</button>
+      </div>
     </div>
-    <p>Votos nesta seção: <b id="qtd">0</b></p>
+
+    <p class="mesario">Votos registrados nesta seção: <b id="qtd">0</b></p>
     <button onclick="encerrar()">Encerrar seção e imprimir BU</button>
-  </div>
+    <p class="dica">Também funciona com o teclado do computador: números, Backspace, Enter e Esc.</p>
+  </section>
 
   <!-- TOTALIZAÇÃO -->
-  <div class="card">
+  <section class="card">
     <h2>2. Totalização / conferência dos partidos</h2>
     <button onclick="totalizar()">Totalizar todos os BUs</button>
     <button onclick="adulterar()">Simular adulteração de um BU</button>
     <div id="totais"></div>
-  </div>
+  </section>
 </div>
 
-<div class="card" style="margin-top:16px">
+<section class="card espaco">
   <h2>Boletins de Urna (BU) gerados</h2>
   <div id="bus"><i>Nenhum BU ainda. Vote e encerre uma seção.</i></div>
-</div>
+</section>
 
-<div class="card" style="margin-top:16px">
+<section class="card espaco">
   <h2>3. Partido fiscal (conferir BU impresso)</h2>
   <p>Cole abaixo o BU completo, como foi impresso (corpo + HASH + ASSINATURA).</p>
   <textarea id="fiscalEntrada" rows="10" placeholder="BOLETIM DE URNA (SIMULADO)&#10;Seção: 1&#10;..."></textarea>
   <button onclick="conferirFiscal()">Conferir BU</button>
   <div id="fiscalSaida"></div>
-</div>
+</section>
 
 <!-- Ordem importa: assinatura.js (Pessoa A) antes dos scripts do simulador -->
 <script src="../parte-A-assinatura/assinatura.js"></script>

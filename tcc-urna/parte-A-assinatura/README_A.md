@@ -1,7 +1,7 @@
 # Parte A — Demonstração de assinatura digital
 
 **Responsável:** (Agatha)
-**Branch do Git:** `parte-a`
+**Branch do Git:** `Heitor'
 
 > Regra de ouro: **só edite arquivos desta pasta.**
 > Se precisar mudar algo na pasta da Parte B ou em `compartilhado/`, combine com a Pessoa B.
@@ -56,7 +56,7 @@ python demo_assinatura.py
 Marque `[x]` conforme for concluindo.
 
 **Entender**
-- [ ] Rodar a demo e confirmar que funciona
+- [x] Rodar a demo e confirmar que funciona
 - [ ] Saber explicar com palavras simples: o que é hash, chave pública, chave privada e assinatura
 
 **Melhorar a demo em Python**
