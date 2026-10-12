@@ -2,11 +2,13 @@
 
 // ---------- DADOS FICTÍCIOS ----------
 const CANDIDATOS = {
-  "13": "Candidato A (Partido Alfa)",
-  "22": "Candidata B (Partido Beta)",
-  "45": "Candidato C (Partido Gama)"
+  "67": "Reels da Silva(Partido Alfa)",
+  "11": "Zé do Povo (Partido Beta)",
+  "45": "Dona Maria (Partido Gama)",
+  "76": "Doquinha (Partido Delta)",
+  "88": "Tizil (Partido Epsilon)"
 };
-const COR_CANDIDATO = {"13": "#b03a2e", "22": "#1f6fb2", "45": "#2e7d4f"};
+const COR_CANDIDATO = {"67": "#b03a2e", "11": "#1f6fb2", "45": "#2e7d4f", "76": "#9c6b1f", "88": "#6b1f9c"};
 const SECOES = [1, 2, 3];
 
 // Estado em memória. IMPORTANTE: guarda só CONTAGENS, nunca quem votou (voto secreto).

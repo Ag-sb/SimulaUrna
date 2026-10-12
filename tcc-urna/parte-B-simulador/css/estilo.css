@@ -2,7 +2,7 @@
    Ideia: a urna é o único elemento "de objeto" (plástico cinza, bisel escuro, tela verde-clara).
    Todo o resto da página fica quieto; o BU impresso é desenhado como papel. */
 :root{
-  --fundo:#edf0f2; --cartao:#fff; --borda:#d3d9de; --texto:#1d2329; --texto-suave:#55616b;
+  --fundo:#123430; --cartao:#fff; --borda:#d3d9de; --texto:#1d2329; --texto-suave:#55616b;
   --urna:#cdd2d4; --urna-borda:#a9b0b5; --bisel:#2a2e32; --tela:#e4ebdc; --tela-texto:#1c2418;
   --tecla:#2b2f33; --verde:#17803f; --laranja:#f08a24; --erro:#b3261e; --ok:#17803f; --foco:#1a63d6;
 }
