@@ -163,7 +163,7 @@ async function totalizar() {
 // Altera o texto do primeiro BU SEM recalcular o hash: a conferência detecta.
 function adulterar() {
   if (!bus.length) return alert("Gere um BU primeiro.");
-  bus[0].texto = bus[0].texto.replace(/(13: )(\d+)/, (m, a, n) => a + (Number(n) + 100));
+  bus[0].texto = bus[0].texto.replace(/(45: )(\d+)/, (m, a, n) => a + (Number(n) + 100));
   renderBUs();
   alert("BU da seção " + bus[0].secao + " adulterado. Clique em 'Totalizar' para ver a detecção.");
 }
