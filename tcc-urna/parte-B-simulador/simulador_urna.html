@@ -4,24 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Simulador Didático de Urna (NÃO é a urna real)</title>
-<style>
-  body{font-family:system-ui,sans-serif;max-width:900px;margin:0 auto;padding:16px;background:#f4f5f7;color:#222}
-  h1{font-size:1.3rem} h2{font-size:1.05rem;margin-top:0}
-  .aviso{background:#fff3cd;border:1px solid #e0c36a;padding:8px 12px;border-radius:6px;font-size:.9rem}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:700px){.grid{grid-template-columns:1fr}}
-  .card{background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px #0002}
-  .tela{background:#dfe6df;border:2px solid #555;border-radius:6px;padding:10px;min-height:90px;margin-bottom:8px}
-  input,select,button{font:inherit;padding:6px 10px;margin:2px}
-  button{cursor:pointer;border:1px solid #666;border-radius:4px;background:#eee}
-  .conf{background:#2e9d3f;color:#fff} .corr{background:#e8913a} .branco{background:#fff}
-  pre{background:#111;color:#cfc;padding:10px;border-radius:6px;overflow-x:auto;font-size:.8rem;white-space:pre-wrap;word-break:break-all}
-  .ok{color:#1b7a2b;font-weight:bold} .erro{color:#c0262d;font-weight:bold}
-  table{border-collapse:collapse;width:100%} td,th{border-bottom:1px solid #ddd;padding:4px;text-align:left}
-</style>
+<link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 <h1>Simulador Didático de Urna e Apuração</h1>
 <p class="aviso">Simulação educativa para fins de TCC. Candidatos e partidos são <b>fictícios</b>. Não representa o software real da urna.</p>
+<p class="status" id="statusAss"></p>
 
 <div class="grid">
   <!-- URNA -->
@@ -53,122 +41,18 @@
   <div id="bus"><i>Nenhum BU ainda. Vote e encerre uma seção.</i></div>
 </div>
 
-<script>
-// ---------- DADOS FICTÍCIOS ----------
-const CANDIDATOS = {
-  "13": "Candidato A (Partido Alfa)",
-  "22": "Candidata B (Partido Beta)",
-  "45": "Candidato C (Partido Gama)"
-};
-const SECOES = [1, 2, 3];
+<div class="card" style="margin-top:16px">
+  <h2>3. Partido fiscal (conferir BU impresso)</h2>
+  <p>Cole abaixo o BU completo, como foi impresso (corpo + HASH + ASSINATURA).</p>
+  <textarea id="fiscalEntrada" rows="10" placeholder="BOLETIM DE URNA (SIMULADO)&#10;Seção: 1&#10;..."></textarea>
+  <button onclick="conferirFiscal()">Conferir BU</button>
+  <div id="fiscalSaida"></div>
+</div>
 
-// Estado em memória. IMPORTANTE: guarda só CONTAGENS, nunca quem votou (voto secreto).
-const urnas = {};
-SECOES.forEach(s => urnas[s] = {contagem: {}, total: 0, encerrada: false});
-const bus = []; // {secao, texto, hash}
-
-let digitado = "";
-
-// ---------- INTERFACE DA URNA ----------
-const sel = document.getElementById("secao");
-SECOES.forEach(s => sel.add(new Option("Seção " + s, s)));
-sel.onchange = atualizaTela;
-
-document.getElementById("numero").addEventListener("input", e => {
-  digitado = e.target.value.replace(/\D/g, "").slice(0, 2);
-  e.target.value = digitado;
-  atualizaTela();
-});
-
-function atualizaTela() {
-  const t = document.getElementById("tela");
-  const u = urnas[sel.value];
-  document.getElementById("qtd").textContent = u.total;
-  if (u.encerrada) { t.textContent = "Seção encerrada."; return; }
-  if (digitado.length < 2) { t.textContent = "Número: " + (digitado || "__"); return; }
-  t.innerHTML = "Número: <b>" + digitado + "</b><br>" +
-    (CANDIDATOS[digitado] || "<b>NÚMERO ERRADO (voto nulo)</b>");
-}
-
-function corrige() { digitado = ""; document.getElementById("numero").value = ""; atualizaTela(); }
-
-function confirma() {
-  if (digitado.length < 2) return alert("Digite os 2 dígitos ou use BRANCO.");
-  votar(CANDIDATOS[digitado] ? digitado : "NULO");
-}
-
-function votar(opcao) {
-  const u = urnas[sel.value];
-  if (u.encerrada) return alert("Esta seção já foi encerrada.");
-  u.contagem[opcao] = (u.contagem[opcao] || 0) + 1;
-  u.total++;
-  corrige();
-  document.getElementById("tela").textContent = "FIM — voto registrado.";
-  document.getElementById("qtd").textContent = u.total;
-}
-
-// ---------- HASH (SHA-256 via Web Crypto) ----------
-async function sha256(texto) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
-}
-
-// ---------- BOLETIM DE URNA ----------
-function montaTextoBU(secao, contagem, total) {
-  const opcoes = [...Object.keys(CANDIDATOS), "BRANCO", "NULO"];
-  let linhas = ["BOLETIM DE URNA (SIMULADO)", "Seção: " + secao];
-  opcoes.forEach(o => linhas.push(o + ": " + (contagem[o] || 0)));
-  linhas.push("TOTAL: " + total);
-  return linhas.join("\n");
-}
-
-async function encerrar() {
-  const s = sel.value, u = urnas[s];
-  if (u.encerrada) return alert("Já encerrada.");
-  if (u.total === 0) return alert("Nenhum voto nesta seção.");
-  u.encerrada = true;
-  const texto = montaTextoBU(s, u.contagem, u.total);
-  bus.push({secao: s, texto, hash: await sha256(texto)});
-  atualizaTela();
-  renderBUs();
-}
-
-function renderBUs() {
-  const div = document.getElementById("bus");
-  div.innerHTML = bus.map(b =>
-    "<pre>" + b.texto + "\nHASH SHA-256: " + b.hash + "</pre>").join("");
-}
-
-// ---------- TOTALIZAÇÃO ----------
-async function totalizar() {
-  if (!bus.length) return alert("Encerre ao menos uma seção.");
-  const soma = {};
-  let html = "<table><tr><th>BU</th><th>Integridade</th></tr>";
-  for (const b of bus) {
-    const hashAgora = await sha256(b.texto);
-    const ok = hashAgora === b.hash;
-    html += "<tr><td>Seção " + b.secao + "</td><td class='" + (ok ? "ok'>Íntegro" : "erro'>HASH NÃO CONFERE") + "</td></tr>";
-    if (!ok) continue; // BU adulterado não entra na soma
-    b.texto.split("\n").forEach(l => {
-      const m = l.match(/^(\d{2}|BRANCO|NULO): (\d+)$/);
-      if (m) soma[m[1]] = (soma[m[1]] || 0) + Number(m[2]);
-    });
-  }
-  html += "</table><h2 style='margin-top:12px'>Resultado</h2><table>";
-  Object.keys(soma).forEach(k =>
-    html += "<tr><td>" + (CANDIDATOS[k] ? k + " - " + CANDIDATOS[k] : k) + "</td><td>" + soma[k] + "</td></tr>");
-  document.getElementById("totais").innerHTML = html + "</table>";
-}
-
-// Altera o texto do primeiro BU SEM recalcular o hash: a conferência detecta.
-function adulterar() {
-  if (!bus.length) return alert("Gere um BU primeiro.");
-  bus[0].texto = bus[0].texto.replace(/(45: )(\d+)/, (m, a, n) => a + (Number(n) + 100));
-  renderBUs();
-  alert("BU da seção " + bus[0].secao + " adulterado. Clique em 'Totalizar' para ver a detecção.");
-}
-
-atualizaTela();
-</script>
+<!-- Ordem importa: assinatura.js (Pessoa A) antes dos scripts do simulador -->
+<script src="../parte-A-assinatura/assinatura.js"></script>
+<script src="js/urna.js"></script>
+<script src="js/boletim.js"></script>
+<script src="js/totalizacao.js"></script>
 </body>
 </html>
