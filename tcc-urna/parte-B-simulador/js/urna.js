@@ -9,6 +9,10 @@ const CANDIDATOS = {
   "88": "Tizil (Partido Epsilon)"
 };
 const COR_CANDIDATO = {"67": "#b03a2e", "11": "#1f6fb2", "45": "#2e7d4f", "76": "#9c6b1f", "88": "#6b1f9c"};
+const FOTO_CANDIDATO = {
+  "67": "img/candidato67.jpg",
+  "11": "img/candidato11.png",
+};
 const SECOES = [1, 2, 3];
 
 // Estado em memória. IMPORTANTE: guarda só CONTAGENS, nunca quem votou (voto secreto).
@@ -63,7 +67,9 @@ function atualizaTela() {
   if (digitado.length === 2) {
     const c = infoCandidato(digitado);
     if (c) {
-      html += "<div class='cand'><div class='foto' style='background:" + COR_CANDIDATO[digitado] + "'>" + c.letra + "</div>" +
+            const url = FOTO_CANDIDATO[digitado];
+      const estilo = "background:" + COR_CANDIDATO[digitado] + (url ? " url(" + url + ") center/cover no-repeat" : "");
+      html += "<div class='cand'><div class='foto' style='" + estilo + "'>" + (url ? "" : c.letra) + "</div>" +
         "<div><div class='cand-nome'>" + c.nome + "</div><div class='cand-partido'>" + c.partido + "</div></div></div>";
     } else {
       html += "<div class='t-nulo'>Número errado. Se confirmar, o voto será nulo.</div>";
