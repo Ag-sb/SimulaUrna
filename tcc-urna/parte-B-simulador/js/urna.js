@@ -5,13 +5,16 @@ const CANDIDATOS = {
   "67": "Reels da Silva(Partido Alfa)",
   "11": "Zé do Povo (Partido Beta)",
   "45": "Dona Maria (Partido Gama)",
-  "76": "Doquinha (Partido Delta)",
+  "76": "Espigão (Partido Delta)",
   "88": "Tizil (Partido Epsilon)"
 };
 const COR_CANDIDATO = {"67": "#b03a2e", "11": "#1f6fb2", "45": "#2e7d4f", "76": "#9c6b1f", "88": "#6b1f9c"};
 const FOTO_CANDIDATO = {
   "67": "img/candidato67.jpg",
   "11": "img/candidato11.png",
+  "45": "img/candidato45.jpg",
+  "76": "img/candidato76.jpeg",
+  "88": "img/candidato88.jpg"
 };
 const SECOES = [1, 2, 3];
 
