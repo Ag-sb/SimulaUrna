@@ -16,6 +16,14 @@ const FOTO_CANDIDATO = {
   "76": "img/candidato76.jpeg",
   "88": "img/candidato88.jpg"
 };
+
+const SOM_CLIQUE = new Audio("audio/clique.mp4");
+const SOM_CONFIRMA = new Audio("audio/confirmar.mp4");
+SOM_CLIQUE.preload = SOM_CONFIRMA.preload = "auto";
+
+function tocar(som) {
+  try { som.currentTime = 0; som.play().catch(() => {}); } catch (e) { /* sem áudio: segue sem som */ }
+}
 const SECOES = [1, 2, 3];
 
 // Estado em memória. IMPORTANTE: guarda só CONTAGENS, nunca quem votou (voto secreto).
@@ -91,6 +99,7 @@ function bloqueada() { return fim || urnas[sel.value].encerrada; }
 
 function tecla(d) {
   if (bloqueada()) return;
+  tocar(SOM_CLIQUE);
   aviso = ""; branco = false;
   if (digitado.length < 2) digitado += d;
   atualizaTela();
@@ -98,6 +107,7 @@ function tecla(d) {
 
 function brancoTecla() {
   if (bloqueada()) return;
+  tocar(SOM_CLIQUE);
   aviso = ""; digitado = ""; branco = true;
   atualizaTela();
 }
@@ -138,7 +148,7 @@ function votar(opcao) {
   u.total++;
   digitado = ""; branco = false; aviso = "";
   fim = true;
-  bip();
+  tocar(SOM_CONFIRMA);
   atualizaTela();
   clearTimeout(fimTimer);
   fimTimer = setTimeout(() => { fim = false; atualizaTela(); }, 1600);
