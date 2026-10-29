@@ -1,10 +1,10 @@
 """
-verificar_arquivo.py  —  papel de quem confere a integridade (simulação didática)
+verificar.py  —  papel de quem confere a integridade (simulação didática)
 
 Lê o arquivo, a assinatura (.sig) e a chave pública (.pem) e diz se o arquivo
 continua exatamente igual ao que foi assinado.
 
-Uso:  python verificar_arquivo.py [caminho_do_arquivo]
+Uso:  python verificar.py [caminho_do_arquivo]
 """
 import sys
 import hashlib

@@ -1,5 +1,5 @@
 """
-assinar_arquivo.py  —  papel do "TSE" (simulação didática)
+assinar.py  —  papel do "TSE" (simulação didática)
 
 Gera um par de chaves RSA, assina um arquivo e salva:
   - exemplos/programa_ficticio.sig   (a assinatura)
@@ -7,7 +7,7 @@ Gera um par de chaves RSA, assina um arquivo e salva:
 
 A chave privada NÃO é salva: fica só na memória e é descartada ao final.
 
-Uso:  python assinar_arquivo.py [caminho_do_arquivo]
+Uso:  python assinar.py [caminho_do_arquivo]
 """
 import sys
 import hashlib

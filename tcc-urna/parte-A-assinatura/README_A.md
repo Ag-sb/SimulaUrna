@@ -1,7 +1,7 @@
 # Parte A — Demonstração de assinatura digital
 
-**Responsável:** (Agatha)
-**Branch do Git:** `Heitor'
+**Responsável:** Agatha Bezerra da Silva
+**Branch do Git:** `parte-a`
 
 > Regra de ouro: **só edite arquivos desta pasta.**
 > Se precisar mudar algo na pasta da Parte B ou em `compartilhado/`, combine com a Pessoa B.
@@ -33,6 +33,8 @@ A demonstração segue estes passos:
 | `assinatura.js` | Versão em JavaScript, que a Parte B vai usar no simulador |
 | `requirements.txt` | Bibliotecas Python necessárias |
 | `exemplos/` | Arquivo de exemplo e assinatura gerada (`.sig`) |
+| `assinar.py` | Demonstrar papel do TSE (assinatura digital) |
+| `verificar.py` | Demonstrar papel de verificação de integridade (`.sig`) |
 
 ---
 
@@ -51,33 +53,9 @@ python demo_assinatura.py
 
 ---
 
-## Lista de tarefas
-
-Marque `[x]` conforme for concluindo.
-
-**Entender**
-- [x] Rodar a demo e confirmar que funciona
-- [ ] Saber explicar com palavras simples: o que é hash, chave pública, chave privada e assinatura
-
-**Melhorar a demo em Python**
-- [ ] Ler um arquivo real da pasta `exemplos/` em vez do texto fixo
-- [ ] Salvar a assinatura em um arquivo `.sig`
-- [ ] Mostrar o resultado no terminal com ✔ e ✘
-- [ ] Salvar a chave pública em arquivo (**nunca** subir a chave privada para o GitHub)
-
-**Entregar para a Parte B**
-- [ ] Criar `assinatura.js` com ECDSA P-256 e SHA-256 (Web Crypto API)
-- [ ] Testar o `assinatura.js` sozinho antes de entregar
-
-**Documentação**
-- [ ] Tirar prints (nome: `A_01_...png`, na pasta `prints/`)
-- [ ] Escrever o texto da seção "Demonstração de assinatura digital" em `docs/`
-
----
-
 ## Contrato com a Parte B (o que o `assinatura.js` deve oferecer)
 
-Funções combinadas (os nomes podem mudar se vocês decidirem juntos):
+Funções combinadas:
 
 ```js
 gerarChaves()                              // devolve { chavePublica, chavePrivada }
@@ -93,11 +71,7 @@ verificar(texto, assinaturaBase64, chavePublica)  // devolve true ou false
 ## Cuidados
 
 - **Nunca** suba chaves privadas (`.key`, `.pem`) para o GitHub. O `.gitignore` já ajuda, mas confira antes do `git push`.
-- A Web Crypto API (JavaScript) e a biblioteca `cryptography` (Python) escrevem assinaturas ECDSA em formatos diferentes. Se quiserem verificar no Python uma assinatura feita no JS (ou o contrário), será preciso converter. Se não for necessário, ignorem este ponto.
+- A Web Crypto API (JavaScript) e a biblioteca `cryptography` (Python) escrevem assinaturas ECDSA em formatos diferentes. Se quiserem verificar no Python uma assinatura feita no JS (ou o contrário), será preciso converter.
 - Faça commits pequenos, com mensagens claras (`git commit -m "salva assinatura em .sig"`).
 
 ---
-
-## Anotações da Pessoa A
-
-(Espaço livre para dúvidas, descobertas e coisas para lembrar na banca.)
